@@ -1,10 +1,5 @@
-# TimeCostPlugin
+# asm
 
-## 统计方法耗时的gradle插件
+## 处理项目里的点击事件，防止双击
 
->包含内容
-
-* gradle transform自定义插件
-* asm修改.class文件
-
-文章地址：[https://juejin.im/post/5cd17b26e51d453a51433063](https://juejin.im/post/5cd17b26e51d453a51433063)
+## 处理glide，切入后判断url下载的图片是否比ImageView宽高大，并进行预警
