@@ -27,7 +27,7 @@ import java.util.zip.ZipEntry
 
 import static org.objectweb.asm.ClassReader.EXPAND_FRAMES
 
-public class TimeTotalPlugin extends Transform implements Plugin<Project>{
+public class TimeTotalPlugin extends Transform implements Plugin<Project> {
     @Override
     void apply(Project project) {
         //注册transform
@@ -170,8 +170,8 @@ public class TimeTotalPlugin extends Transform implements Plugin<Project>{
      */
     static boolean checkClassFile(String name) {
         //只处理需要的class文件
-        return (name.endsWith(".class") && !name.startsWith("R\$")
-                && !"R.class".equals(name) && !"BuildConfig.class".equals(name)
-                && "android/support/v4/app/FragmentActivity.class".equals(name))
+        return (name.endsWith(".class") && !"R.class".equals(name)
+                && !name.contains("R.class") && !"BuildConfig.class".equals(name)
+                /*&& "android/support/v4/app/FragmentActivity.class".equals(name)*/)
     }
 }

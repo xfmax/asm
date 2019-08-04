@@ -2,9 +2,11 @@ package com.example.asmdemo;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+
+import com.example.hook.CheckDoubleClick;
+
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private TextView text;
@@ -19,9 +21,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
-        Log.d("xbase", "start time:" + System.currentTimeMillis());
         System.out.println("onclick test");
-        Log.d("xbase", "end time:" + System.currentTimeMillis());
     }
 
 }

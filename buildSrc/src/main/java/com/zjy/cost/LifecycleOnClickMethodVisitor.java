@@ -1,5 +1,6 @@
 package com.zjy.cost;
 
+import org.objectweb.asm.Label;
 import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
 
@@ -12,23 +13,40 @@ import static org.objectweb.asm.Opcodes.*;
 public class LifecycleOnClickMethodVisitor extends MethodVisitor {
 
     public LifecycleOnClickMethodVisitor(MethodVisitor mv) {
-        super(Opcodes.ASM4, mv);
+        super(Opcodes.ASM5, mv);
     }
 
     @Override
     public void visitCode() {
         super.visitCode();
         //方法执行前插入
-        mv.visitLdcInsn("xbase");
-        mv.visitTypeInsn(NEW, "java/lang/StringBuilder");
-        mv.visitInsn(DUP);
-        mv.visitMethodInsn(INVOKESPECIAL, "java/lang/StringBuilder", "<init>", "()V", false);
-        mv.visitLdcInsn("end time:");
-        mv.visitMethodInsn(INVOKEVIRTUAL, "java/lang/StringBuilder", "append", "(Ljava/lang/String;)Ljava/lang/StringBuilder;", false);
-        mv.visitMethodInsn(INVOKESTATIC, "java/lang/System", "currentTimeMillis", "()J", false);
-        mv.visitMethodInsn(INVOKEVIRTUAL, "java/lang/StringBuilder", "append", "(J)Ljava/lang/StringBuilder;", false);
-        mv.visitMethodInsn(INVOKEVIRTUAL, "java/lang/StringBuilder", "toString", "()Ljava/lang/String;", false);
-        mv.visitMethodInsn(INVOKESTATIC, "android/util/Log", "d", "(Ljava/lang/String;Ljava/lang/String;)I", false);
+        Label label0 = new Label();
+        mv.visitLabel(label0);
+        mv.visitLineNumber(24, label0);
+        mv.visitMethodInsn(INVOKESTATIC, "com/example/hook/CheckDoubleClick", "check", "()Z", false);
+        Label label1 = new Label();
+        mv.visitJumpInsn(IFEQ, label1);
+        Label label2 = new Label();
+        mv.visitLabel(label2);
+        mv.visitLineNumber(25, label2);
+        mv.visitFieldInsn(GETSTATIC, "java/lang/System", "out", "Ljava/io/PrintStream;");
+        mv.visitLdcInsn("dddddddd");
+        mv.visitMethodInsn(INVOKEVIRTUAL, "java/io/PrintStream", "println", "(Ljava/lang/String;)V", false);
+        mv.visitLabel(label1);
+        mv.visitLineNumber(27, label1);
+        mv.visitFrame(Opcodes.F_SAME, 0, null, 0, null);
+        mv.visitFieldInsn(GETSTATIC, "java/lang/System", "out", "Ljava/io/PrintStream;");
+        mv.visitLdcInsn("onclick test");
+        mv.visitMethodInsn(INVOKEVIRTUAL, "java/io/PrintStream", "println", "(Ljava/lang/String;)V", false);
+        Label label3 = new Label();
+        mv.visitLabel(label3);
+        mv.visitLineNumber(28, label3);
+        mv.visitInsn(RETURN);
+        Label label4 = new Label();
+        mv.visitLabel(label4);
+        mv.visitLocalVariable("this", "Lcom/example/asmdemo/MainActivity;", null, label0, label4, 0);
+        mv.visitLocalVariable("v", "Landroid/view/View;", null, label0, label4, 1);
+        mv.visitMaxs(2, 2);
         mv.visitInsn(POP);
     }
 
