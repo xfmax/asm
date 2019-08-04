@@ -41,7 +41,7 @@ public class LifecycleClassVisitor extends ClassVisitor implements Opcodes {
         System.out.println("LifecycleClassVisitor : visitMethod : " + name);
         MethodVisitor mv = cv.visitMethod(access, name, desc, signature, exceptions);
         //匹配FragmentActivity
-        if ("android/support/v4/app/FragmentActivity".equals(this.mClassName) /*|| this.mClassName.contains("com/example/asmdemo")*/ || flag) {
+        if ("android/support/v4/app/FragmentActivity".equals(this.mClassName)  || flag) {
             if ("onCreate".equals(name)) {
                 //处理onCreate
                 System.out.println("LifecycleClassVisitor : change method ----> " + name);
@@ -52,6 +52,11 @@ public class LifecycleClassVisitor extends ClassVisitor implements Opcodes {
                 return new LifecycleOnDestroyMethodVisitor(mv);
             } else if ("onClick".equals(name)) {
                 return new LifecycleOnClickMethodVisitor(mv);
+            }
+        }
+        if ("com/bumptech/glide/request/target/DrawableImageViewTarget".equals(this.mClassName)) {//hook Glide
+            if ("setResource".equals(name)) {
+                return new GlideMethodVisitor(mv);
             }
         }
         return mv;
